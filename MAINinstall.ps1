@@ -75,7 +75,7 @@ if (-not $User.IsInRole( [Security.Principal.WindowsBuiltInRole]::Administrator 
 }
 
 
-Function Download-Chrome {
+Function DownloadChrome {
     Write-Host 'Downloading Google Chrome... ' -NoNewLine
 
     # Test internet connection
@@ -127,7 +127,7 @@ Function Install-Chrome {
     }
 }
 
-Function Clean-Up {
+Function CleanUp {
     Write-Host 'Removing Chrome installer... ' -NoNewline
 
     try {
@@ -139,9 +139,9 @@ Function Clean-Up {
     }
 }
 
-Download-Chrome
+DownloadChrome
 Install-Chrome
-Clean-Up
+CleanUp
 
 if ($RunScriptSilent -NE $True){
     Read-Host 'Install complete! Press [Enter] to exit'
