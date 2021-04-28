@@ -10,19 +10,19 @@ Clear-Host
 $wc = New-Object net.webclient
 $wc.Downloadfile("https://download.microsoft.com/download/1/7/1/1718CCC4-6315-4D8E-9543-8E28A4E18C4C/dxwebsetup.exe", "C:\tempscripts\dxsetup.exe")
 "Installing ..."
-Start-Process -Wait -FilePath "C:\tempscripts\dxsetup.exe" 
+Start-Process -Wait -FilePath "C:\tempscripts\dxsetup.exe" -ArgumentList '/Q'
 Clear-Host
 "Downloading package redistribuable Microsoft Visual C ++ pour Visual Studio 2015, 2017 & 2019"
 $wc = New-Object net.webclient
 $wc.Downloadfile("https://aka.ms/vs/16/release/vc_redist.x64.exe", "C:\tempscripts\vcredist64.exe")
 "Installing ..."
-Start-Process -Wait -FilePath "C:\tempscripts\vcredist64.exe" 
+Start-Process -Wait -FilePath "C:\tempscripts\vcredist64.exe" -ArgumentList '/Q'
 Clear-Host
 "Downloading package redistribuable Microsoft Visual C ++ pour Visual Studio 2015, 2017 & 2019"
 $wc = New-Object net.webclient
 $wc.Downloadfile("https://aka.ms/vs/16/release/vc_redist.x86.exe", "C:\tempscripts\vcredist32.exe")
 "Installing ..."
-Start-Process -Wait -FilePath "C:\tempscripts\vcredist32.exe"
+Start-Process -Wait -FilePath "C:\tempscripts\vcredist32.exe" -ArgumentList '/Q'
 Clear-Host
 "Downloading .NET 3.5 SP1"
 $wc = New-Object net.webclient

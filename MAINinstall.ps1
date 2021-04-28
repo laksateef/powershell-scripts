@@ -180,13 +180,46 @@ do {
             "N"{break}
         }
         Write-Host ""
+    do {
+        Write-Host "============= Install Driver Booster ? =============="
+        Write-Host ""
+        Write-Host "`t1. Press 'Y' for YES"
+        Write-Host "`t2. Press 'N' for NO"
+        Write-Host ""
+        Write-Host "====================================================="
+        Write-Host ""
+        write-host -nonewline "Type your choice and press Enter: "
+            $choice = read-host
+            write-host ""
+            $ok = $choice -match '^[yn]+$'   
+            if ( -not $ok) { write-host "Invalid selection" }
+        } until ( $ok )
+        switch -Regex ( $choice ) {
+            "Y"
+                {
+                    write-host "Download... " -nonewline
+                    $wc = New-Object net.webclient
+                    $wc.Downloadfile("https://cdn.iobit.com/dl/driver_booster_setup.exe", "C:\TEST\driverbooster.exe")
+                    Write-Host 'success!' -ForegroundColor Green
+                    Write-Host ""
+                    write-host "Installing... " -ForegroundColor Yellow
+                    Write-Host ""
+                    Start-Process -Wait -FilePath "C:\TEST\driverbooster.exe" -ArgumentList '/Q'
+                    Write-Host ""
+                    Write-Host "Installing... " -NoNewline
+                    Write-Host 'success!' -ForegroundColor Green
+                    Write-Host ""
+                }
+                "N"{break}
+            }
+            Write-Host ""        
 do {
     Write-Host "============= Install VLC ? =============="
     Write-Host ""
     Write-Host "`t1. Press 'Y' for YES"
     Write-Host "`t2. Press 'N' for NO"
     Write-Host ""
-    Write-Host "====================================================="
+    Write-Host "=========================================="
     Write-Host ""
     write-host -nonewline "Type your choice and press Enter: "
         $choice = read-host
@@ -204,7 +237,7 @@ do {
             Write-Host ""
             write-host "Installing... " -ForegroundColor Yellow
             Write-Host ""
-            Start-Process -Wait -FilePath "C:\TEST\VLC.exe" -ArgumentList '/S','/v','/qn' -passthru
+            Start-Process -Wait -FilePath "C:\TEST\VLC.exe" -passthru
             Write-Host ""
             Write-Host "Installing... " -NoNewline
             Write-Host 'success!' -ForegroundColor Green
@@ -219,7 +252,7 @@ do {
     Write-Host "`t1. Press 'Y' for YES"
     Write-Host "`t2. Press 'N' for NO"
     Write-Host ""
-    Write-Host "====================================================="
+    Write-Host "=============================================="
     Write-Host ""
     write-host -nonewline "Type your choice and press Enter: "
         $choice = read-host
@@ -252,7 +285,7 @@ do {
     Write-Host "`t1. Press 'Y' for YES"
     Write-Host "`t2. Press 'N' for NO"
     Write-Host ""
-    Write-Host "====================================================="
+    Write-Host "============================================"
     Write-Host ""
     write-host -nonewline "Type your choice and press Enter: "
         $choice = read-host
@@ -318,7 +351,7 @@ do {
     Write-Host "`t1. Press 'Y' for YES"
     Write-Host "`t2. Press 'N' for NO"
     Write-Host ""
-    Write-Host "====================================================="
+    Write-Host "=================================================="
     Write-Host ""
     write-host -nonewline "Type your choice and press Enter: "
         $choice = read-host
