@@ -1,59 +1,23 @@
-#Commande Check + créer un dossier
 $path = "C:\TEST"
 If(!(test-path $path))
 {
       New-Item -ItemType Directory -Force -Path $path
 }
-
-#Install 7zip
-"Download 7zip"
-[Net.ServicePointManager]::SecurityProtocol = [Net.SecurityProtocolType]::Tls12
-Invoke-WebRequest -Uri "https://www.7-zip.org/a/7z1900-x64.exe" -OutFile "C:\TEST\7zip.exe"
-"Installing 7zip"
-Start-Process -Wait -FilePath "C:\TEST\7zip.exe" -ArgumentList '/S','/v','/qn' -passthru
-
-#Install AIMP3
-"Downloading AIMP3"
-$wc = New-Object net.webclient
-$wc.Downloadfile("https://www.aimp.ru/?do=download.file&id=4", "C:\TEST\aimp.exe")
-"Installing AIMP3"
-Start-Process -Wait -FilePath "C:\TEST\aimp.exe" -ArgumentList '/S','/v','/qn' -passthru
-
-#Install VLC
-"Download VLC"
-$wc = New-Object net.webclient
-$wc.Downloadfile("https://videolan.mirror.garr.it/mirrors/videolan/vlc/3.0.12/win64/vlc-3.0.12-win64.exe", "C:\TEST\VLC.exe")
-"Installing VideoLAN"
-Start-Process -Wait -FilePath "C:\TEST\VLC.exe" -ArgumentList '/S','/v','/qn' -passthru
-
-#Install Discord
-"Downloading Discord"
-$wc = New-Object net.webclient
-$wc.Downloadfile("https://discord.com/api/downloads/distributions/app/installers/latest?channel=stable&platform=win&arch=x86", "C:\TEST\discord.exe")
-"Installing Discord"
-Start-Process -Wait -FilePath "C:\TEST\discord.exe" -ArgumentList '/S','/v','/qn' -passthru
-
-#Install Plex (player)
-"Downloading Plex"
-$wc = New-Object net.webclient
-$wc.Downloadfile("https://downloads.plex.tv/plex-desktop/1.31.0.2254-43df1e6e/windows/Plex-1.31.0.2254-43df1e6e-x86_64.exe", "C:\TEST\plex.exe")
-"Installing Plex"
-Start-Process -Wait -FilePath "C:\TEST\plex.exe" -ArgumentList '/S','/v','/qn' -passthru
-
-#Install qBittorent
-"Downloading qBitorrent"
-$wc = New-Object net.webclient
-$wc.Downloadfile("https://sourceforge.net/projects/qbittorrent/files/qbittorrent-win32/qbittorrent-4.3.4.1/qbittorrent_4.3.4.1_x64_setup.exe/download", "C:\TEST\torrent.exe")
-"Installing qBitorrent"
-Start-Process -Wait -FilePath "C:\TEST\torrent.exe" -ArgumentList '/S','/v','/qn' -passthru
-
-#Install Firefox
-"Downloading Firefox"
-$wc = New-Object net.webclient
-$wc.Downloadfile("https://download.mozilla.org/?product=firefox-latest-ssl&os=win64&lang=fr", "C:\TEST\firefox.exe")
-"Installing Firefox"
-Start-Process -Wait -FilePath "C:\TEST\firefox.exe" -ArgumentList '/S','/v','/qn' -passthru
-
+Clear-Host
+do {
+    Write-Host "============= Install Chrome ? =============="
+    Write-Host "`t1. Press 'Y' for YES"
+    Write-Host "`t2. Press 'N' for NO"
+    Write-Host "============================================"
+    write-host -nonewline "Type your choice and press Enter: "
+        $choice = read-host
+        write-host ""
+        $ok = $choice -match '^[yn]+$'   
+        if ( -not $ok) { write-host "Invalid selection" }
+    } until ( $ok )
+    switch -Regex ( $choice ) {
+        "Y"
+        {
 #Install Chrome
 Write-Host 'Please allow several minutes for the install to complete. '
 # Install Google Chrome x64 on 64-Bit systems? $True or $False
@@ -146,16 +110,240 @@ CleanUp
 if ($RunScriptSilent -NE $True){
     Read-Host 'Install complete! Press [Enter] to exit'
 }
-
-
-
-
-
-
-
-
-
-
-    #Commande "Press any key to continue"
-Write-Host -NoNewLine 'Press any key to continue...';
-$null = $Host.UI.RawUI.ReadKey('NoEcho,IncludeKeyDown');
+        }
+        "N"{break}
+    }
+    Write-Host ""
+do {
+    Write-Host "============= Install Mozilla Firefox ? =============="
+    Write-Host ""
+    Write-Host "`t1. Press 'Y' for YES"
+    Write-Host "`t2. Press 'N' for NO"
+    Write-Host ""
+    Write-Host "====================================================="
+    Write-Host ""
+    write-host -nonewline "Type your choice and press Enter: "
+        $choice = read-host
+        write-host ""
+        $ok = $choice -match '^[yn]+$'   
+        if ( -not $ok) { write-host "Invalid selection" }
+    } until ( $ok )
+    switch -Regex ( $choice ) {
+        "Y"
+        {
+            write-host "Download... " -nonewline
+            $wc = New-Object net.webclient
+            $wc.Downloadfile("https://download.mozilla.org/?product=firefox-latest-ssl&os=win64&lang=fr", "C:\TEST\firefox.exe")
+            Write-Host 'success!' -ForegroundColor Green
+            Write-Host ""
+            write-host "Installing... " -ForegroundColor Yellow
+            Write-Host ""
+            Start-Process -Wait -FilePath "C:\TEST\firefox.exe" -ArgumentList '/S','/v','/qn' -passthru
+            Write-Host ""
+            Write-Host "Installing... " -NoNewline
+            Write-Host 'success!' -ForegroundColor Green
+            Write-Host ""
+        }
+        "N"{break}
+    }
+    Write-Host ""
+    do {
+        Write-Host "============= Install 7zip ? =============="
+        Write-Host ""
+        Write-Host "`t1. Press 'Y' for YES"
+        Write-Host "`t2. Press 'N' for NO"
+        Write-Host ""
+        Write-Host "====================================================="
+        Write-Host ""
+        write-host -nonewline "Type your choice and press Enter: "
+            $choice = read-host
+            write-host ""
+            $ok = $choice -match '^[yn]+$'   
+            if ( -not $ok) { write-host "Invalid selection" }
+        } until ( $ok )
+        switch -Regex ( $choice ) {
+            "Y"
+            {
+                write-host "Download... " -nonewline
+                [Net.ServicePointManager]::SecurityProtocol = [Net.SecurityProtocolType]::Tls12
+                Invoke-WebRequest -Uri "https://www.7-zip.org/a/7z1900-x64.exe" -OutFile "C:\TEST\7zip.exe"
+                Write-Host 'success!' -ForegroundColor Green
+                Write-Host ""
+                write-host "Installing... " -ForegroundColor Yellow
+                Write-Host ""
+                Start-Process -Wait -FilePath "C:\TEST\7zip.exe" -ArgumentList '/S','/v','/qn' -passthru
+                Write-Host ""
+                Write-Host "Installing... " -NoNewline
+                Write-Host 'success!' -ForegroundColor Green
+                Write-Host ""
+            }
+            "N"{break}
+        }
+        Write-Host ""
+do {
+    Write-Host "============= Install VLC ? =============="
+    Write-Host ""
+    Write-Host "`t1. Press 'Y' for YES"
+    Write-Host "`t2. Press 'N' for NO"
+    Write-Host ""
+    Write-Host "====================================================="
+    Write-Host ""
+    write-host -nonewline "Type your choice and press Enter: "
+        $choice = read-host
+        write-host ""
+        $ok = $choice -match '^[yn]+$'   
+        if ( -not $ok) { write-host "Invalid selection" }
+    } until ( $ok )
+    switch -Regex ( $choice ) {
+        "Y"
+        {
+            write-host "Download... " -nonewline
+            $wc = New-Object net.webclient
+            $wc.Downloadfile("https://videolan.mirror.garr.it/mirrors/videolan/vlc/3.0.12/win64/vlc-3.0.12-win64.exe", "C:\TEST\VLC.exe")
+            Write-Host 'success!' -ForegroundColor Green
+            Write-Host ""
+            write-host "Installing... " -ForegroundColor Yellow
+            Write-Host ""
+            Start-Process -Wait -FilePath "C:\TEST\VLC.exe" -ArgumentList '/S','/v','/qn' -passthru
+            Write-Host ""
+            Write-Host "Installing... " -NoNewline
+            Write-Host 'success!' -ForegroundColor Green
+            Write-Host ""
+        }
+        "N"{break}
+    }
+    Write-Host ""
+do {
+    Write-Host "============= Install Discord ? =============="
+    Write-Host ""
+    Write-Host "`t1. Press 'Y' for YES"
+    Write-Host "`t2. Press 'N' for NO"
+    Write-Host ""
+    Write-Host "====================================================="
+    Write-Host ""
+    write-host -nonewline "Type your choice and press Enter: "
+        $choice = read-host
+        write-host ""
+        $ok = $choice -match '^[yn]+$'   
+        if ( -not $ok) { write-host "Invalid selection" }
+    } until ( $ok )
+    switch -Regex ( $choice ) {
+        "Y"
+        {
+            write-host "Download... " -nonewline
+            $wc = New-Object net.webclient
+            $wc.Downloadfile("https://discord.com/api/downloads/distributions/app/installers/latest?channel=stable&platform=win&arch=x86", "C:\TEST\discord.exe")
+            Write-Host 'success!' -ForegroundColor Green
+            Write-Host ""
+            write-host "Installing... " -ForegroundColor Yellow
+            Write-Host ""
+            Start-Process -FilePath "C:\TEST\discord.exe" -ArgumentList '/S','/v','/qn' -passthru
+            Write-Host ""
+            Write-Host "Installing... " -NoNewline
+            Write-Host 'success!' -ForegroundColor Green
+            Write-Host ""         
+        }
+        "N"{break}
+    }
+    Write-Host ""
+do {
+    Write-Host "============= Install AIMP3 ? =============="
+    Write-Host ""
+    Write-Host "`t1. Press 'Y' for YES"
+    Write-Host "`t2. Press 'N' for NO"
+    Write-Host ""
+    Write-Host "====================================================="
+    Write-Host ""
+    write-host -nonewline "Type your choice and press Enter: "
+        $choice = read-host
+        write-host ""
+        $ok = $choice -match '^[yn]+$'   
+        if ( -not $ok) { write-host "Invalid selection" }
+    } until ( $ok )
+    switch -Regex ( $choice ) {
+        "Y"
+        {
+            write-host "Download... " -nonewline
+            $wc = New-Object net.webclient
+            $wc.Downloadfile("https://www.aimp.ru/?do=download.file&id=4", "C:\TEST\aimp.exe")
+            Write-Host 'success!' -ForegroundColor Green
+            Write-Host ""
+            write-host "Installing... " -ForegroundColor Yellow
+            Write-Host ""
+            Start-Process -Wait -FilePath "C:\TEST\aimp.exe" -ArgumentList '/S','/v','/qn' -passthru
+            Write-Host ""
+            Write-Host "Installing... " -NoNewline
+            Write-Host 'success!' -ForegroundColor Green
+            Write-Host ""
+        }
+        "N"{break}
+    }
+    Write-Host ""
+do {
+    Write-Host "============= Install Plex (Player) ? =============="
+    Write-Host ""
+    Write-Host "`t1. Press 'Y' for YES"
+    Write-Host "`t2. Press 'N' for NO"
+    Write-Host ""
+    Write-Host "====================================================="
+    Write-Host ""
+    write-host -nonewline "Type your choice and press Enter: "
+        $choice = read-host
+        write-host ""
+        $ok = $choice -match '^[yn]+$'   
+        if ( -not $ok) { write-host "Invalid selection" }
+    } until ( $ok )
+    switch -Regex ( $choice ) {
+        "Y"
+        {
+            write-host "Download... " -nonewline
+            $wc = New-Object net.webclient
+            $wc.Downloadfile("https://downloads.plex.tv/plex-desktop/1.31.0.2254-43df1e6e/windows/Plex-1.31.0.2254-43df1e6e-x86_64.exe", "C:\TEST\plex.exe")
+            Write-Host 'success!' -ForegroundColor Green
+            Write-Host ""
+            write-host "Installing... " -ForegroundColor Yellow
+            Write-Host ""
+            Start-Process -FilePath "C:\TEST\plex.exe" -ArgumentList '/S','/v','/qn' -passthru
+            Write-Host ""
+            Write-Host "Installing... " -NoNewline
+            Write-Host 'success!' -ForegroundColor Green
+            Write-Host ""       
+        }
+        "N"{break}
+    }
+    Write-Host ""
+do {
+    Write-Host "============= Install qBittorrent ? =============="
+    Write-Host ""
+    Write-Host "`t1. Press 'Y' for YES"
+    Write-Host "`t2. Press 'N' for NO"
+    Write-Host ""
+    Write-Host "====================================================="
+    Write-Host ""
+    write-host -nonewline "Type your choice and press Enter: "
+        $choice = read-host
+        write-host ""
+        $ok = $choice -match '^[yn]+$'   
+        if ( -not $ok) { write-host "Invalid selection" }
+    } until ( $ok )
+    switch -Regex ( $choice ) {
+        "Y"
+        {
+            write-host "Download... " -nonewline
+            $wc = New-Object net.webclient
+            $wc.Downloadfile("https://sourceforge.net/projects/qbittorrent/files/qbittorrent-win32/qbittorrent-4.3.4.1/qbittorrent_4.3.4.1_x64_setup.exe/download", "C:\TEST\torrent.exe")
+            Write-Host 'success!' -ForegroundColor Green
+            Write-Host ""
+            write-host "Installing... " -ForegroundColor Yellow
+            Write-Host ""
+            Start-Process -Wait -FilePath "C:\TEST\torrent.exe" -ArgumentList '/S','/v','/qn' -passthru
+            Write-Host ""
+            Write-Host "Installing... " -NoNewline
+            Write-Host 'success!' -ForegroundColor Green
+            Write-Host ""
+        }
+        "N"{break}
+    }
+    Write-Host ""
+    Remove-Item 'c:\TEST' -Recurse
+Pause
