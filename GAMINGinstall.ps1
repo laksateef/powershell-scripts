@@ -32,6 +32,29 @@ Start-Process -Wait -FilePath "C:\tempscripts\dotnet.exe"
 Clear-Host
 
 do {
+    Write-Host "============= Install nVidia GeForce Experience ? =============="
+    Write-Host "`t1. Press 'Y' for YES"
+    Write-Host "`t2. Press 'N' for NO"
+    Write-Host "================================================================"
+    write-host -nonewline "Type your choice and press Enter: "
+        $choice = read-host
+        write-host ""
+        $ok = $choice -match '^[yn]+$'   
+        if ( -not $ok) { write-host "Invalid selection" }
+    } until ( $ok )
+    switch -Regex ( $choice ) {
+        "Y"
+        {
+            "Downloading nVidia GeForce Experience "
+            $wc = New-Object net.webclient
+            $wc.Downloadfile("https://fr.download.nvidia.com/GFE/GFEClient/3.21.0.36/GeForce_Experience_v3.21.0.36.exe", "C:\tempscripts\gfe.exe")
+            "Installing nVidia GeForce Experience "
+            Start-Process -FilePath "C:\tempscripts\gfe.exe" -ArgumentList '/S','/v','/qn' -passthru
+        }
+        "N"{break}
+    }
+Clear-Host
+do {
     Write-Host "============= Install Blizzard Battle.net ? =============="
     Write-Host "`t1. Press 'Y' for YES"
     Write-Host "`t2. Press 'N' for NO"
@@ -95,7 +118,7 @@ do {
             $wc = New-Object net.webclient
             $wc.Downloadfile("https://www.dm.origin.com/download", "C:\tempscripts\origin.exe")
             "Installing Origin"
-            Start-Process -Wait -FilePath "C:\tempscripts\origin.exe" -ArgumentList '/S','/v','/qn' -passthru            
+            Start-Process -FilePath "C:\tempscripts\origin.exe" -ArgumentList '/S','/v','/qn' -passthru            
         }
         "N"{break}
     }
